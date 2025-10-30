@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .loginbox {
+      margin: 80px auto;
+      width: 400px;
+      padding: 30px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    #loginbtn {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      font-weight: 600;
+    }
+
+    #loginbtn:hover {
+      background-color: #0056b3;
+    }
+
+    #error {
+      color: red;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loginbox">
+    <h3>Login</h3>
+    <input id="Loginname" class="form-control mt-3" type="text" placeholder="Enter your username">
+    <input id="loginpass" class="form-control mt-3" type="password" placeholder="Enter your password">
+    <button id="loginbtn" class="btn mt-3">Login</button>
+
+    <p id="error"></p>
+  </div>
+
+  <script>
+    document.getElementById("loginbtn").addEventListener("click", function () {
+      let loginname = document.getElementById("Loginname").value.trim();
+      let loginpass = document.getElementById("loginpass").value.trim();
+      let error = document.getElementById("error");
+
+
+      let details = JSON.parse(localStorage.getItem("userdata")) || [];
+      
+      for (let val of details) {
+        if (loginname === val.name && loginpass === val.pass)
+        {
+           localStorage.setItem("currentUser", val.name);
+           window.location.href = "page2.html";
+        }
+        else
+        {
+            error.innerHTML='enter correct information';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    #list {
+      display: none;
+      padding: 20px;
+    }
+    #buttons {
+      display: block;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .expense-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="buttons">     
+    <div class="expense">
+      <h3>Welcome to Expense Tracker</h3>
+      <p>Track and manage your expense effectively. Use the buttons to add new expenses or view your expenses history</p>
+      <button id="addex">Add Expense</button>
+      <button id="showex">Expense List</button>
+    </div>
+  </section>
+
+  <section id="list">
+    <h1>Expenses</h1>
+    
+  </section>
+
+  <script>
+     document.getElementById('addex').addEventListener('click', function(){
+      window.location.href = 'addex.html';
+    });
+
+
+
+
+    document.getElementById('showex').addEventListener('click', function(){
+      let showbox = document.getElementById('list');
+      let buttonbox = document.getElementById('buttons');
+
+      showbox.style.display = 'block';
+      buttonbox.style.display = 'none';
+
+
+      let userexpense = JSON.parse(localStorage.getItem('storedata')) || [];
+      console.log(userexpense);
+
+      let name=localStorage.getItem('currentUser');
+      console.log(name);
+
+  
+      showbox.innerHTML = '<h1>Expenses</h1>';
+
+       
+      
+      for(let i = userexpense.length - 1; i >= 0; i--){
+ 
+          if(userexpense[i].username === name){
+    
+        let div = document.createElement('div');
+        div.classList.add('expense-item');
+
+        let hTag = document.createElement('h2');
+        hTag.innerHTML =userexpense[i].expname;
+
+        let pamount = document.createElement('p');
+        pamount.innerHTML=`<strong>Amount:</strong> ${userexpense[i].examount}`;
+
+        let pdate = document.createElement('p');
+        pdate.innerHTML=`<strong>Date:</strong> ${userexpense[i].exdate}`;
+
+        let pdesc = document.createElement('p');
+        pdesc.innerHTML=`<strong>Description:</strong> ${userexpense[i].exdes}`;
+
+        div.append(hTag, pamount, pdate, pdesc);
+
+        showbox.append(div);
+          }
+        
+      }
+    }); 
+  </script>
+
+</body>
+</html>
